@@ -1,11 +1,13 @@
 import express from 'express';
-import cors from 'cors'
-import dotenv from 'dotenv'
-import { client } from './models/db.js';
+import cors from 'cors';
+import urlRouter from './routes/url.routes'
 
 const PORT = process.env.PORT
 const app = express()
-
-
 app.use(cors())
+app.use(express.json())
+
+app.use('/',urlRouter)
+
+
 app.listen(PORT,console.log("started on 3000"))
