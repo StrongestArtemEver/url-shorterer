@@ -19,6 +19,6 @@ async function createStartTables() {
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP not null
     )`
     }catch(e){
-        throw new e
+        throw new Error(e)
     }
 }

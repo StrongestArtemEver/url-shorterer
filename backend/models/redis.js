@@ -1,6 +1,6 @@
 import {createClient} from 'redis'
 
-const client = await createClient()
+export const redis = await createClient()
     .on('error',err => {console.error("Redis Client Error" ,err)})
     .connect()
 
