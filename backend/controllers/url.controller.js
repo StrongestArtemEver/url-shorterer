@@ -20,7 +20,6 @@ export async function getShortLink(shortLink){
 }
 
 export async function createShortLink(link){
-    console.log(`link :::::::::::::; ${link} `)
     let shortLink = createRandomString(6)
     let fullUrl = `http://127.0.0.1:3000/:${shortLink}`
     await addUrlToDB(link,shortLink)
@@ -51,4 +50,13 @@ function createRandomString(stringLength) {
         result += chars.charAt(Math.floor(Math.random() * chars.length))
     }
     return result
+}
+
+export async function updateUrlStats(shortLink) {
+    const stats = await getUrlStats(shortLink)
+    const follows = stats[0].follows + 1
+    console.log(follows,"follows",stats)
+
+    const req = await client`update urls set follows = ${follows} where short_url like ${shortLink}`
+    console.log(req)
 }
