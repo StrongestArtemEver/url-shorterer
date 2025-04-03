@@ -11,6 +11,6 @@
     border: 0;
 }
 
-.input-url:focus-within {
-    outline: 1px solid #e2e8f0;
+button:disabled {
+    cursor: not-allowed;
 }
