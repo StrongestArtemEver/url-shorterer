@@ -2,7 +2,7 @@ import { useState } from 'react';
 import '../css/InputUrl.css';
 import axios from 'axios';
 
-function InputUrl({ setShortLink }) {
+function InputUrl({ linksList, setLinksList }) {
     const [link, setLink] = useState('');
 
     const handleSubmit = async (e) => {
@@ -10,10 +10,21 @@ function InputUrl({ setShortLink }) {
         if (!link.trim()) return;
 
         try {
-            const response = await axios.post('http://localhost:3000/short', {
+            const shortLink = await axios.post('http://localhost:3000/short', {
                 link: link,
             });
-            setShortLink(response.data);
+            const follows = await axios.post('http://localhost:3000/stats', {
+                link: shortLink.data.slice(-6)
+            })
+            const newListEl = {
+                originalUrl: link,
+                shortLink: shortLink.data,
+                follows: follows.data[0].follows,
+            }
+            setLinksList([
+                ...linksList,
+                newListEl
+            ])
         } catch (error) {
             console.error('Error creating short link:', error);
         }
